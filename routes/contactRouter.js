@@ -12,14 +12,9 @@ contactRouter.route('/')
     })
 
     .post((req, res, next) => {
-        Contact.create(req.body)
-            .then(contact => {
-                console.log("-------LOG:", contact);
-                res.statusCode = 200;
-                res.setHeader('Content-Type', 'application/json');
-                res.json(`${contact} was sent to Peter!`)
-            })
-            .catch(err => next(err))
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/plain');
+        res.end(`Your EMAIL: "${req.body.email}", SUBJECT: "${req.body.subject}", and MESSAGE: "${req.body.message}", was sent to Peter!`);
     })
 
     .put((req, res) => {
