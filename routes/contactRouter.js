@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('./cors');
 const Contact = require('../model/contact');
+const authenticate = require('../authenticate');
 
 const contactRouter = express.Router();
 
