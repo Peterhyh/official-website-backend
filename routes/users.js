@@ -3,7 +3,7 @@ const User = require('../model/user');
 const passport = require('passport');
 const authenticate = require('../authenticate');
 const router = express.Router();
-const authenticate = require('../authenticate');
+const cors = require('./cors');
 
 
 
@@ -53,7 +53,7 @@ router.post('/signup', (req, res) => {
 // })
 
 
-router.post('/login', passport.authenticate('local'), (req, res) => {
+router.post('/login', cors.corsWithOptions, passport.authenticate('local'), (req, res) => {
   const token = authenticate.getToken({ _id: req.user._id });
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');

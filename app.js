@@ -4,14 +4,15 @@ const path = require('path');
 const logger = require('morgan');
 const passport = require('passport');
 const config = require('./config.js');
-// const authenticate = require('./authenticate');
-// const session = require('express-session');
-// const FileStore = require('session-file-store')(session);
-// const cookieParser = require('cookie-parser');
+
+
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const contactRouter = require('./routes/contactRouter');
+
+
+
 const mongoose = require('mongoose');
 const url = config.mongoUrl;
 const connect = mongoose.connect(url, {
@@ -21,7 +22,6 @@ const connect = mongoose.connect(url, {
 
 connect.then(() => console.log('Connected correctly to server!'), err => console.log(err));
 
-//----------------------------------------------------------
 const app = express();
 
 // view engine setup
@@ -31,16 +31,9 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(session({
-//   name: 'session-id',
-//   secret: '12345-67890-09876-54321',
-//   saveUninitialized: false,
-//   resave: false,
-//   store: new FileStore()
-// }));
+
+
 
 app.use(passport.initialize());  //check to see if there is an existing session for the client
 // app.use(passport.session());  if so, session data will be loaded into the req as "req.user"
@@ -48,18 +41,14 @@ app.use(passport.initialize());  //check to see if there is an existing session 
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+
 app.use('/contact', contactRouter);
 
-// const auth = (req, res, next) => {
-//   console.log(req.user);
-//   if (!req.user) {
-//     const err = new Error('You are not authenticated!');
-//     err.status = 401;
-//     return next(err);
-//   } else {
-//     return next();
-//   }
-// }
+
+
 
 
 // catch 404 and forward to error handler

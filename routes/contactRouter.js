@@ -18,7 +18,7 @@ contactRouter.route('/')
 
     })
 
-    .post(cors.corsWithOptions, (req, res, next) => {
+    .post(authenticate.verifyUser, cors.corsWithOptions, (req, res, next) => {
         Contact.create(req.body)
             .then(contact => {
                 console.log("---POST LOG:", contact);
